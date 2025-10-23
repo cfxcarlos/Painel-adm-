@@ -1,0 +1,65 @@
+import { useEffect } from "react";
+import { usePlayerSelection } from "../_stores/usePlayers";
+import { useSearch } from "../_stores/useSearch";
+
+export const Header = () => {
+  const selection = usePlayerSelection();
+  const search = useSearch();
+  useEffect(() => {
+    search.setCurrent("");
+  }, []);
+  useEffect(() => {
+    selection.setCurrent(false);
+  }, [search.current]);
+
+  return (
+    <header className="flex items-center gap-[25px] flex-none w-full overflow-visible">
+      <div className="flex items-center justify-between w-[804px] overflow-visible">
+        <div className="flex flex-col gap-[5px] overflow-visible">
+          <h1 className="text-white text-[25px] font-semibold leading-none flex-none overflow-visible max-w-[810px] truncate">
+            Jogadores
+          </h1>
+          <small className="leading-none overflow-visible text-white/55 text-[10px] font-semibold">
+            <span className="text-white/35">Jogadores /</span> Lista
+          </small>
+        </div>
+        <div className="flex-none h-[49px] bg-white/1 focus-within:bg-white/3 rounded-[5px] border-1 border-white/5 w-[300px] flex items-center pl-[16px] gap-[16px] group">
+          <SearchIcon />
+          <input
+            value={search.current}
+            onChange={(e) => search.setCurrent(e.target.value)}
+            type="text"
+            className="w-full h-full bg-transparent text-[14px] placeholder:text-white/10 group-focus-within:placeholder:text-white/30 text-white/80 font-medium"
+            placeholder="Pesquise algum nome ou ID..."
+          />
+        </div>
+      </div>
+      {selection.current && (
+        <div className="flex flex-col gap-[5px] overflow-visible w-[396px]">
+          <h1 className="text-white text-[25px] font-semibold leading-none flex-none overflow-visible max-w-[810px] truncate">
+            Informações
+          </h1>
+          <small className="leading-none overflow-visible text-white/55 text-[10px] font-semibold">
+            <span className="text-white/35">Jogadores /</span> Lista
+          </small>
+        </div>
+      )}
+    </header>
+  );
+};
+
+const SearchIcon = () => (
+  <svg
+    width="17"
+    height="17"
+    viewBox="0 0 17 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12.1498 10.6918H11.3819L11.1098 10.4294C12.0952 9.28636 12.6369 7.82709 12.6358 6.3179C12.6358 5.06834 12.2653 3.84684 11.571 2.80786C10.8768 1.76889 9.89009 0.95911 8.73565 0.480924C7.58121 0.00273745 6.31089 -0.122378 5.08534 0.121399C3.85979 0.365177 2.73404 0.966898 1.85047 1.85047C0.966898 2.73404 0.365177 3.85979 0.121399 5.08534C-0.122378 6.31089 0.00273745 7.58121 0.480924 8.73565C0.95911 9.89009 1.76889 10.8768 2.80786 11.571C3.84684 12.2653 5.06834 12.6358 6.3179 12.6358C7.88279 12.6358 9.32133 12.0623 10.4294 11.1098L10.6918 11.3819V12.1498L15.5517 17L17 15.5517L12.1498 10.6918ZM6.3179 10.6918C3.89766 10.6918 1.94397 8.73814 1.94397 6.3179C1.94397 3.89766 3.89766 1.94397 6.3179 1.94397C8.73814 1.94397 10.6918 3.89766 10.6918 6.3179C10.6918 8.73814 8.73814 10.6918 6.3179 10.6918Z"
+      fill="white"
+      className="opacity-10 group-focus-within:opacity-30"
+    />
+  </svg>
+);
