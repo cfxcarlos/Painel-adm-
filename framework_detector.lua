@@ -8,12 +8,11 @@ Framework.Adapter = nil
 -- Função para detectar o framework em uso
 function Framework.Detect()
     -- Verificar vRP Net (Creative Network)
-    if GetResourceState('vrp_net') == 'started' then
-        Framework.Detected = 'vrp_net'
-        print("^2[FRAMEWORK] vRP Net detectado^0")
-        return 'vrp_net'
-    end
-    
+if GetResourceState('vrp_net') == 'started' or GetResourceState('vrp') == 'started' then
+    Framework.Detected = 'vrp_net'
+    print("^2[FRAMEWORK] vRP Net (Creative) detectado^0")
+    return 'vrp_net'
+end
     -- Verificar vRP
     if GetResourceState('vrp') == 'started' then
         Framework.Detected = 'vrp'
