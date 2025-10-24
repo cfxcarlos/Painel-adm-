@@ -7,6 +7,13 @@ Framework.Adapter = nil
 
 -- Função para detectar o framework em uso
 function Framework.Detect()
+    -- Verificar vRP Net (VRP da base personalizada)
+    if GetResourceState('vrp_net') == 'started' then
+        Framework.Detected = 'vrp_net'
+        print("^2[FRAMEWORK] VRP Net detectado^0")
+        return 'vrp_net'
+    end
+    
     -- Verificar vRP
     if GetResourceState('vrp') == 'started' then
         Framework.Detected = 'vrp'
@@ -46,7 +53,9 @@ end
 function Framework.Initialize()
     local framework = Framework.Detect()
     
-    if framework == 'vrp' then
+    if framework == 'vrp_net' then
+        Framework.Adapter = require('adapters.vrp_net_adapter')
+    elseif framework == 'vrp' then
         Framework.Adapter = require('adapters.vrp_adapter')
     elseif framework == 'esx' then
         Framework.Adapter = require('adapters.esx_adapter')
